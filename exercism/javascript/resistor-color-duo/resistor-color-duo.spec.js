@@ -16,4 +16,8 @@ describe('Resistor Colors', () => {
   test('Orange and orange', () => {
     expect(value(['orange', 'orange'])).toEqual(33);
   });
+
+  test('Ignore additional colors', () => {
+    expect(value(['green', 'brown', 'orange'])).toEqual(51);
+  })
 });
