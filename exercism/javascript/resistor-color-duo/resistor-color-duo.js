@@ -2,19 +2,9 @@
 // This is only a SKELETON file for the 'Resistor Color Duo' exercise. It's been provided as a
 // convenience to get you started writing code faster.
 //
-export const COLORS = [
-  'black',
-  'brown',
-  'red',
-  'orange',
-  'yellow',
-  'green',
-  'blue',
-  'violet',
-  'grey',
-  'white'
-];
+
+import {colorCode} from '../resistor-color/resistor-color.js'
 
 export const value = (arr) => {
-  return +(COLORS.indexOf(arr[0]).toString() + COLORS.indexOf(arr[1]).toString())
-};
+  return +(colorCode(arr[0]).toString() + colorCode(arr[1]).toString())
+}
