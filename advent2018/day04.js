@@ -1087,3 +1087,10 @@ input.forEach((e, i, a) => {
 sleepyMinutes.sort((a, b) => a - b)
 
 console.log(sleepyMinutes)
+
+const mins = {}
+for (let i = 0; i < 60; i++) {
+  mins[i] = sleepyMinutes.filter(e => e === i).length
+}
+
+console.log(mins)
