@@ -1054,3 +1054,15 @@ input.forEach((e, i, a) => {
   }
 })
 console.log(guards)
+
+let sleepyGuard = ''
+let max = 0
+
+for (var thisGuard in guards) {
+  if (guards[thisGuard] > max) {
+    sleepyGuard = thisGuard
+    max = guards[thisGuard]
+  }
+}
+
+console.log(sleepyGuard)
