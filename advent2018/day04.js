@@ -1039,7 +1039,7 @@ let wakeTime
 
 input.forEach((e, i, a) => {
   if (e.includes('Guard')) {
-    guard = e.match(/#(\d+)/)[0]
+    guard = e.match(/#(\d+)/)[1]
     timeAsleep = 0
   }
   if (e.includes('wakes')) {
@@ -1073,7 +1073,7 @@ let wakeMin = 0
 
 input.forEach((e, i, a) => {
   if (e.includes('Guard')) {
-    guard = e.match(/#(\d+)/)[0]
+    guard = e.match(/#(\d+)/)[1]
   }
   if (e.includes('wakes') && guard === sleepyGuard) {
     wakeMin = +e.match(/\d{2}:(\d{2})/)[1]
@@ -1094,3 +1094,17 @@ for (let i = 0; i < 60; i++) {
 }
 
 console.log(mins)
+
+let mostMin
+max = 0
+
+for (const min in mins) {
+  if (mins[min] > max) {
+    mostMin = min
+    max = mins[min]
+  }
+}
+
+console.log(`Minute most asleep: ${mostMin}`)
+
+console.log(`Opportunity: ${sleepyGuard * mostMin}`)
