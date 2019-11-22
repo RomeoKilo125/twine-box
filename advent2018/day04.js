@@ -1066,3 +1066,24 @@ for (var thisGuard in guards) {
 }
 
 console.log(sleepyGuard)
+
+const sleepyMinutes = []
+let sleepMin = 0
+let wakeMin = 0
+
+input.forEach((e, i, a) => {
+  if (e.includes('Guard')) {
+    guard = e.match(/#(\d+)/)[0]
+  }
+  if (e.includes('wakes') && guard === sleepyGuard) {
+    wakeMin = +e.match(/\d{2}:(\d{2})/)[1]
+    sleepMin = +a[i - 1].match(/\d{2}:(\d{2})/)[1]
+    for (let m = sleepMin; m < wakeMin; m++) {
+      sleepyMinutes.push(m)
+    }
+  }
+})
+
+sleepyMinutes.sort((a, b) => a - b)
+
+console.log(sleepyMinutes)
