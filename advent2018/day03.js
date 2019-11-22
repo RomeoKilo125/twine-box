@@ -1266,7 +1266,11 @@ const input = [
   '#1265 @ 429,317: 24x28'
 ]
 
-const bolt = new Array(1000).fill(new Array(1000).fill(''))
+const bolt = new Array(1000)
+
+for (let i = 0; i < bolt.length; i++) {
+  bolt[i] = new Array(1000).fill(null)
+}
 
 input.forEach((e, i, a) => {
   const parsed = e.match(/#(\d+) @ (\d+),(\d+): (\d+)x(\d+)/i)
@@ -1278,12 +1282,32 @@ input.forEach((e, i, a) => {
 
   for (let r = y; r < y + h; r++) {
     for (let c = x; c < x + w; c++) {
-      bolt[r][c] = id
+      // console.log(id + ' ' + c + ' ' + r + ' ' + bolt[r][c])
+      if (bolt[r][c] === null) {
+        bolt[r][c] = id
+      } else {
+        bolt[r][c] = 'x'
+      }
+      // console.log(bolt[r][c])
     }
   }
 })
+const flat = bolt.flat()
+const flatFilter = flat.filter(e => e === 'x')
 
-const flatFilter = bolt.flat().filter(e => e === '1264')
-console.log(flatFilter)
+console.log(`overlap = ${flatFilter.length}`)
 
-console.log(flatFilter.length)
+input.forEach((e, i, a) => {
+  const parsed = e.match(/#(\d+) @ (\d+),(\d+): (\d+)x(\d+)/i)
+  const id = parsed[1]
+  // const x = +parsed[2]
+  // const y = +parsed[3]
+  const w = +parsed[4]
+  const h = +parsed[5]
+  const area = w * h
+
+  const flatFilter = flat.filter(e => e === id)
+  if (flatFilter.length === area) {
+    console.log(`good id = ${id}`)
+  }
+})
