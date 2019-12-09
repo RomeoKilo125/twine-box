@@ -55,10 +55,10 @@ const test2b = ['U98', 'R91', 'D20', 'R16', 'D67', 'R40', 'U7', 'R15', 'U6', 'R7
 function createPanelFromPaths (path1, path2) {
   const directions = ['L', 'R', 'D', 'U']
   const dimensions = {
-    L: '0',
-    R: '0',
-    D: '0',
-    U: '0'
+    L: 0,
+    R: 0,
+    D: 0,
+    U: 0
   }
   directions.forEach(dir => {
     const dirVal = Math.max(...path1.filter(e => e.includes(dir)).map(e => e.replace(dir, '')))
@@ -73,10 +73,18 @@ function createPanelFromPaths (path1, path2) {
     }
   })
   console.log(dimensions)
+  const rows = dimensions.U - (dimensions.D * -1)
+  const cols = dimensions.R - (dimensions.L * -1)
+  const panel = new Array(rows)
+  for (let i = 0; i < panel.length; i++) {
+    panel[i] = new Array(cols).fill('.')
+  }
+  panel[dimensions.D][dimensions.L] = 'O'
+  return panel
 }
 
 function plotWire (wire, array) {
 
 }
 
-createPanelFromPaths(test1a, test1b)
+const panel = createPanelFromPaths(test1a, test1b)
