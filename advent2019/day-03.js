@@ -98,7 +98,7 @@ function findValueInArray (val, array) {
   return results
 }
 
-function plotWire (wire, array) {
+function plotWire (wire, array, val = 0) {
   // find the origin
   const coord = findValueInArray('O', array)
   const origX = coord[0][0]
@@ -140,7 +140,7 @@ function plotWire (wire, array) {
           currX += direction
           break
       }
-      array[currY][currX] += 1
+      array[currY][currX] += val
     }
   })
 }
@@ -154,11 +154,12 @@ const wire2 = test2b
 
 const panel = createPanelFromPaths(wire1, wire2)
 
-plotWire(wire1, panel)
-plotWire(wire2, panel)
+plotWire(wire1, panel, 1)
+
+plotWire(wire2, panel, 2)
 
 const origin = findValueInArray('O', panel)[0]
-const crossWires = findValueInArray(2, panel)
+const crossWires = findValueInArray(3, panel)
 const distances = []
 crossWires.forEach(e => {
   distances.push(calculateDistance(origin, e))
