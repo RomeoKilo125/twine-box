@@ -149,8 +149,8 @@ function calculateDistance (pointA, pointB) {
   return Math.abs(pointA[0] - pointB[0]) + Math.abs(pointA[1] - pointB[1])
 }
 
-const wire1 = test2a
-const wire2 = test2b
+const wire1 = input1
+const wire2 = input2
 
 const panel = createPanelFromPaths(wire1, wire2)
 
