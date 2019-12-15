@@ -149,8 +149,16 @@ function calculateDistance (pointA, pointB) {
   return Math.abs(pointA[0] - pointB[0]) + Math.abs(pointA[1] - pointB[1])
 }
 
-let panel = createPanelFromPaths(test1a, test1b)
+const panel = createPanelFromPaths(test2a, test2b)
 
-console.table(panel)
+plotWire(test2a, panel)
+plotWire(test2b, panel)
 
-// panel = plotWire (test1a, panel)
+const origin = findValueInArray('O', panel)[0]
+const crossWires = findValueInArray(2, panel)
+const distances = []
+crossWires.forEach(e => {
+  distances.push(calculateDistance(origin, e))
+})
+
+console.log(Math.min(...distances))
