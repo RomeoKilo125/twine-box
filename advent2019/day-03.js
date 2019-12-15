@@ -97,6 +97,51 @@ function findValueInArray (val, array) {
   return results
 }
 function plotWire (wire, array) {
+  // find the origin
+  const coord = findValueInArray('O', array)
+  const origX = coord[0][0]
+  const origY = coord[0][1]
+
+  // variables to keep track of current operation
+  let currX = origX
+  let currY = origY
+  // R or C
+  let dimension
+  // 1 or -1
+  let direction
+  wire.forEach(e => {
+    switch (e[0]) {
+      case 'R':
+        dimension = 'C'
+        direction = 1
+        break
+      case 'L':
+        dimension = 'C'
+        direction = -1
+        break
+      case 'U':
+        dimension = 'R'
+        direction = 1
+        break
+      case 'D':
+        dimension = 'R'
+        direction = -1
+        break
+    }
+    const len = e.slice(1)
+    for (var i = 0; i < len; i++) {
+      switch (dimension) {
+        case 'R':
+          currY += direction
+          break
+        case 'C':
+          currX += direction
+          break
+      }
+      array[currY][currX] += 1
+    }
+  })
+}
 
 }
 
