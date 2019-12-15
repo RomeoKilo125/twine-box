@@ -49,8 +49,10 @@ const input2 = ['L1000', 'U720', 'R111', 'D390', 'L400', 'U931', 'R961', 'D366',
 
 const test1a = ['R8', 'U5', 'L5', 'D3']
 const test1b = ['U7', 'R6', 'D4', 'L4']
+
 const test2a = ['R75', 'D30', 'R83', 'U83', 'L12', 'D49', 'R71', 'U7', 'L72']
 const test2b = ['U62', 'R66', 'U55', 'R34', 'D71', 'R55', 'D58', 'R83']
+
 const test3a = ['R98', 'U47', 'R26', 'D63', 'R33', 'U87', 'L62', 'D20', 'R33', 'U53', 'R51']
 const test3b = ['U98', 'R91', 'D20', 'R16', 'D67', 'R40', 'U7', 'R15', 'U6', 'R7']
 
@@ -74,7 +76,6 @@ function createPanelFromPaths (path1, path2) {
       dimensions[dir] = dirVal
     }
   })
-  console.log(dimensions)
   const rows = dimensions.U + dimensions.D + 1
   const cols = dimensions.R + dimensions.L + 1
   const panel = new Array(rows)
@@ -96,6 +97,7 @@ function findValueInArray (val, array) {
   }
   return results
 }
+
 function plotWire (wire, array) {
   // find the origin
   const coord = findValueInArray('O', array)
