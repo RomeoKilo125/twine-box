@@ -85,6 +85,17 @@ function createPanelFromPaths (path1, path2) {
   return panel
 }
 
+function findValueInArray (val, array) {
+  const results = []
+
+  for (let r = 0; r < array.length; r++) {
+    const origin = array[r].indexOf(val)
+    if (origin !== -1) {
+      results.push([origin, r])
+    }
+  }
+  return results
+}
 function plotWire (wire, array) {
 
 }
