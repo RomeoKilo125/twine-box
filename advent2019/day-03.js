@@ -79,7 +79,7 @@ function createPanelFromPaths (path1, path2) {
   const cols = dimensions.R + dimensions.L + 1
   const panel = new Array(rows)
   for (let i = 0; i < panel.length; i++) {
-    panel[i] = new Array(cols).fill('.')
+    panel[i] = new Array(cols).fill(0)
   }
   panel[dimensions.D][dimensions.L] = 'O'
   return panel
