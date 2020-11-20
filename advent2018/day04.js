@@ -1128,5 +1128,5 @@ function findSleepiestMinuteforGuard (sleepyGuard) {
       max = mins[min]
     }
   }
-  return { minute: mostMin, time: max}
+  return { minute: mostMin, time: max }
 }
