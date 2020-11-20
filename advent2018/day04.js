@@ -1048,9 +1048,10 @@ input.forEach((e, i, a) => {
     sleepTime = new Date(a[i - 1].match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/)[0])
     timeAsleep += (wakeTime - sleepTime) / 1000 / 60
     if (!guards[guard]) {
-      guards[guard] = timeAsleep
+      guards[guard] = {}
+      guards[guard].totalSleepTime = timeAsleep
     } else {
-      guards[guard] += timeAsleep
+      guards[guard].totalSleepTime += timeAsleep
     }
   }
 })
@@ -1063,59 +1064,69 @@ let sleepyGuard = ''
 let max = 0
 
 for (var thisGuard in guards) {
-  if (guards[thisGuard] > max) {
+  if (guards[thisGuard].totalSleepTime > max) {
     sleepyGuard = thisGuard
-    max = guards[thisGuard]
+    max = guards[thisGuard].totalSleepTime
   }
 }
 
 console.log('sleepyGuard')
 console.log(sleepyGuard)
 
-// find all minutes where sleepiest guard is asleep
-const sleepyMinutes = []
-let sleepMin = 0
-let wakeMin = 0
-
-input.forEach((e, i, a) => {
-  if (e.includes('Guard')) {
-    guard = e.match(/#(\d+)/)[1]
-  }
-  if (e.includes('wakes') && guard === sleepyGuard) {
-    wakeMin = +e.match(/\d{2}:(\d{2})/)[1]
-    sleepMin = +a[i - 1].match(/\d{2}:(\d{2})/)[1]
-    for (let m = sleepMin; m < wakeMin; m++) {
-      sleepyMinutes.push(m)
-    }
-  }
-})
-
-sleepyMinutes.sort((a, b) => a - b)
-
-console.log('sleepyMinutes')
-console.log(sleepyMinutes)
-
-// count and list how often sleepyGuard is asleep at each minute
-const mins = {}
-for (let i = 0; i < 60; i++) {
-  mins[i] = sleepyMinutes.filter(e => e === i).length
-}
-
-console.log('mins')
-console.log(mins)
-
-// find minute most asleep
-let mostMin
-max = 0
-
-for (const min in mins) {
-  if (mins[min] > max) {
-    mostMin = min
-    max = mins[min]
-  }
-}
+const mostMin = findSleepiestMinuteforGuard(sleepyGuard)
 
 console.log(`Minute most asleep: ${mostMin}`)
-
 // multiply guard ID by the minute they are most likely to be asleep
-console.log(`Opportunity: ${sleepyGuard * mostMin}`)
+console.log(`Opportunity: ${sleepyGuard * mostMin.minute}`)
+
+for (thisGuard in guards) {
+  guards[thisGuard].sleepiestMin = findSleepiestMinuteforGuard(thisGuard)
+}
+
+console.log(guards)
+
+function findSleepiestMinuteforGuard (sleepyGuard) {
+  // find all minutes where given guard is asleep
+  const sleepyMinutes = []
+  let sleepMin = 0
+  let wakeMin = 0
+
+  input.forEach((e, i, a) => {
+    if (e.includes('Guard')) {
+      guard = e.match(/#(\d+)/)[1]
+    }
+    if (e.includes('wakes') && guard === sleepyGuard) {
+      wakeMin = +e.match(/\d{2}:(\d{2})/)[1]
+      sleepMin = +a[i - 1].match(/\d{2}:(\d{2})/)[1]
+      for (let m = sleepMin; m < wakeMin; m++) {
+        sleepyMinutes.push(m)
+      }
+    }
+  })
+
+  sleepyMinutes.sort((a, b) => a - b)
+
+  // console.log('sleepyMinutes')
+  // console.log(sleepyMinutes)
+
+  // count and list how often sleepyGuard is asleep at each minute
+  const mins = {}
+  for (let i = 0; i < 60; i++) {
+    mins[i] = sleepyMinutes.filter(e => e === i).length
+  }
+
+  // console.log('mins')
+  // console.log(mins)
+
+  // find minute most asleep
+  let mostMin
+  max = 0
+
+  for (const min in mins) {
+    if (mins[min] > max) {
+      mostMin = min
+      max = mins[min]
+    }
+  }
+  return { minute: mostMin, time: max}
+}
