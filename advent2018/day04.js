@@ -1037,6 +1037,7 @@ let timeAsleep
 let sleepTime
 let wakeTime
 
+// find total time asleep per guard
 input.forEach((e, i, a) => {
   if (e.includes('Guard')) {
     guard = e.match(/#(\d+)/)[1]
@@ -1053,8 +1054,11 @@ input.forEach((e, i, a) => {
     }
   }
 })
+
+console.log('guards')
 console.log(guards)
 
+// find sleepiest guard
 let sleepyGuard = ''
 let max = 0
 
@@ -1065,8 +1069,10 @@ for (var thisGuard in guards) {
   }
 }
 
+console.log('sleepyGuard')
 console.log(sleepyGuard)
 
+// find all minutes where sleepiest guard is asleep
 const sleepyMinutes = []
 let sleepMin = 0
 let wakeMin = 0
@@ -1086,15 +1092,19 @@ input.forEach((e, i, a) => {
 
 sleepyMinutes.sort((a, b) => a - b)
 
+console.log('sleepyMinutes')
 console.log(sleepyMinutes)
 
+// count and list how often sleepyGuard is asleep at each minute
 const mins = {}
 for (let i = 0; i < 60; i++) {
   mins[i] = sleepyMinutes.filter(e => e === i).length
 }
 
+console.log('mins')
 console.log(mins)
 
+// find minute most asleep
 let mostMin
 max = 0
 
@@ -1107,4 +1117,5 @@ for (const min in mins) {
 
 console.log(`Minute most asleep: ${mostMin}`)
 
+// multiply guard ID by the minute they are most likely to be asleep
 console.log(`Opportunity: ${sleepyGuard * mostMin}`)
