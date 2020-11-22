@@ -631,16 +631,19 @@ let input = 'UjVvhHOKkRrOooNpxXPnJjJnGgNyYmMtThHusqvVQXUCcuHhxJjcJjCsSHhfFzZQEXx
 
 function assertAlchemy(compound, expectedResult) {
   // console.log(`'${originalCompound}' to '${resultCompound}'`)
-  Assert.strictEqual(alchemy(compound), expectedResult, `${compound} to ${expectedResult}`)
+  Assert.deepStrictEqual(alchemy(compound), expectedResult, `${compound} to ${expectedResult}`)
+}
+
+function assertAnalysis(compound, expectedResult) {
+  Assert.deepStrictEqual(analyzeSample(compound), expectedResult)
 }
 
 function assertUniqueElements(compound, expectedResult) {
-  Assert.strictEqual(getUniqueElements(compound), expectedResult, `'${compound}' to '${expectedResult}'`)
+  Assert.deepStrictEqual(getUniqueElements(compound), expectedResult, `'${compound}' to '${expectedResult}'`)
 }
 
 function assertRemoveElement(compound, element, expectedResult) {
-  console.log(`'${compound}' remove '${element}' is '${expectedResult}'`)
-  Assert.strictEqual(removeElementFromCompound(compound, element), expectedResult)
+  Assert.deepStrictEqual(removeElementFromCompound(compound, element), expectedResult)
 }
 
 assertAlchemy(null, '')
@@ -654,12 +657,12 @@ assertAlchemy('dabAcCaCBAcCcaDA', 'dabCBAcaDA')
 
 assertUniqueElements(null, '')
 assertUniqueElements('', '')
-assertUniqueElements('ab', 'ab')
-assertUniqueElements('aA', 'a')
-assertUniqueElements('AA', 'A')
-assertUniqueElements('abBA', 'ab')
-assertUniqueElements('abAB', 'ab')
-assertUniqueElements('dabAcCaCBAcCcaDA', 'abcd')
+assertUniqueElements('ab', ['a','b'])
+assertUniqueElements('aA', ['a'])
+assertUniqueElements('AA', ['A'])
+assertUniqueElements('abBA', ['a','b'])
+assertUniqueElements('abAB', ['a','b'])
+assertUniqueElements('dabAcCaCBAcCcaDA', ['a','b','c','d'])
 
 assertRemoveElement(null, null, '')
 assertRemoveElement('', '', '')
@@ -709,7 +712,7 @@ function getUniqueElements(compound) {
   for (var i = compoundArray.length - 1; i > 0; i--)
     if (isSameUnit(compoundArray[i], compoundArray[i - 1]))
       compoundArray.splice(i, 1)
-  return compoundArray.join('')
+  return compoundArray
 }
 
 function sortAlphaArray(arr) {
