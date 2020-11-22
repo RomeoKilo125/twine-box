@@ -629,6 +629,7 @@ let input = 'UjVvhHOKkRrOooNpxXPnJjJnGgNyYmMtThHusqvVQXUCcuHhxJjcJjCsSHhfFzZQEXx
   'WwYyeFfKEekjJEHUuorROxWwbheEHjJBFfIQqXxiZFWPpwfzzrZzRMmIiUmMeESsuozZQVvqOQTeEtqS'
 //#endregion
 
+//#region test definitions
 function assertAlchemy(compound, expectedResult) {
   // console.log(`'${originalCompound}' to '${resultCompound}'`)
   Assert.deepStrictEqual(alchemy(compound), expectedResult, `${compound} to ${expectedResult}`)
@@ -649,6 +650,7 @@ function assertRemoveElement(compound, element, expectedResult) {
 function assertRefinedAnalysis(compound, expectedResult) {
   Assert.deepStrictEqual(refineAndAnalyze(compound), expectedResult)
 }
+//#endregion
 
 //#region completed tests
 assertAlchemy(null, '')
@@ -688,9 +690,9 @@ assertAnalysis('AA', 2)
 assertAnalysis('abBA', 0)
 assertAnalysis('abAB', 4)
 assertAnalysis('dabAcCaCBAcCcaDA', 10)
-//#endregion completed tests
 
 assertRefinedAnalysis('dabAcCaCBAcCcaDA', { 'a': 6, 'b': 8, 'c': 4, 'd': 6 })
+//#endregion completed tests
 
 function alchemy(compound) {
   if (!compound) return ''
@@ -764,6 +766,7 @@ function refineAndAnalyze(compound) {
 
 
 // output for part 1
-// console.log(analyzeSample(input))
+console.log(analyzeSample(input))
 
 // output for part 2
+console.log(refineAndAnalyze(input))
