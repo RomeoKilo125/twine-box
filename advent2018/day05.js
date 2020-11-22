@@ -629,14 +629,18 @@ let input = 'UjVvhHOKkRrOooNpxXPnJjJnGgNyYmMtThHusqvVQXUCcuHhxJjcJjCsSHhfFzZQEXx
   'WwYyeFfKEekjJEHUuorROxWwbheEHjJBFfIQqXxiZFWPpwfzzrZzRMmIiUmMeESsuozZQVvqOQTeEtqS'
 //#endregion
 
-function assertAlchemy(originalCompound, resultCompound) {
+function assertAlchemy(compound, expectedResult) {
   // console.log(`'${originalCompound}' to '${resultCompound}'`)
-  Assert.strictEqual(alchemy(originalCompound), resultCompound, `${originalCompound} to ${resultCompound}`)
+  Assert.strictEqual(alchemy(compound), expectedResult, `${compound} to ${expectedResult}`)
 }
 
 function assertUniqueElements(compound, expectedResult) {
-  console.log(`'${compound}' to '${expectedResult}'`)
   Assert.strictEqual(getUniqueElements(compound), expectedResult, `'${compound}' to '${expectedResult}'`)
+}
+
+function assertRemoveElement(compound, element, expectedResult) {
+  console.log(`'${compound}' remove '${element}' is '${expectedResult}'`)
+  Assert.strictEqual(removeElementFromCompound(compound, element), expectedResult)
 }
 
 assertAlchemy(null, '')
@@ -656,6 +660,17 @@ assertUniqueElements('AA', 'A')
 assertUniqueElements('abBA', 'ab')
 assertUniqueElements('abAB', 'ab')
 assertUniqueElements('dabAcCaCBAcCcaDA', 'abcd')
+
+assertRemoveElement(null, null, '')
+assertRemoveElement('', '', '')
+assertRemoveElement('ab', 'a', 'b')
+assertRemoveElement('aA', 'a', '')
+assertRemoveElement('abBA', 'a', 'bB')
+assertRemoveElement('abAB', 'a', 'bB')
+assertRemoveElement('dabAcCaCBAcCcaDA', 'a', 'dbcCCBcCcD')
+assertRemoveElement('dabAcCaCBAcCcaDA', 'b', 'daAcCaCAcCcaDA')
+assertRemoveElement('dabAcCaCBAcCcaDA', 'c', 'dabAaBAaDA')
+assertRemoveElement('dabAcCaCBAcCcaDA', 'd', 'abAcCaCBAcCcaA')
 
 function alchemy(compound) {
   if (!compound) return ''
@@ -708,5 +723,13 @@ function sortAlphaArray(arr) {
     return 0
   })
 }
+
+function removeElementFromCompound(compound, element) {
+  if (!compound || !element) return ''
+    return compound.replace(RegExp(element, 'gi'), '')
+}
+
+
+
 // output for part 1
 // console.log(alchemy(input).length)
