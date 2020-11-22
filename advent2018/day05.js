@@ -646,6 +646,11 @@ function assertRemoveElement(compound, element, expectedResult) {
   Assert.deepStrictEqual(removeElementFromCompound(compound, element), expectedResult)
 }
 
+function assertRefinedAnalysis(compound, expectedResult) {
+  Assert.deepStrictEqual(refineAndAnalyze(compound), expectedResult)
+}
+
+//#region completed tests
 assertAlchemy(null, '')
 assertAlchemy('', '')
 assertAlchemy('ab', 'ab')
@@ -675,6 +680,18 @@ assertRemoveElement('dabAcCaCBAcCcaDA', 'b', 'daAcCaCAcCcaDA')
 assertRemoveElement('dabAcCaCBAcCcaDA', 'c', 'dabAaBAaDA')
 assertRemoveElement('dabAcCaCBAcCcaDA', 'd', 'abAcCaCBAcCcaA')
 
+assertAnalysis(null, 0)
+assertAnalysis('', 0)
+assertAnalysis('ab', 2)
+assertAnalysis('aA', 0)
+assertAnalysis('AA', 2)
+assertAnalysis('abBA', 0)
+assertAnalysis('abAB', 4)
+assertAnalysis('dabAcCaCBAcCcaDA', 10)
+//#endregion completed tests
+
+assertRefinedAnalysis('dabAcCaCBAcCcaDA', { 'a': 6, 'b': 8, 'c': 4, 'd': 6 })
+
 function alchemy(compound) {
   if (!compound) return ''
   let compoundArray = compound.split('')
@@ -691,6 +708,10 @@ function alchemy(compound) {
 
   compound = compoundArray.join('')
   return compound
+}
+
+function analyzeSample(compound) {
+  return alchemy(compound).length
 }
 
 function isCompatibleUnit(unitA, unitB) {
@@ -729,7 +750,7 @@ function sortAlphaArray(arr) {
 
 function removeElementFromCompound(compound, element) {
   if (!compound || !element) return ''
-    return compound.replace(RegExp(element, 'gi'), '')
+  return compound.replace(RegExp(element, 'gi'), '')
 }
 
 
