@@ -753,7 +753,17 @@ function removeElementFromCompound(compound, element) {
   return compound.replace(RegExp(element, 'gi'), '')
 }
 
+function refineAndAnalyze(compound) {
+  const uniqueElements = getUniqueElements(compound)
+  let analysis = {}
+  uniqueElements.forEach(e => {
+    analysis[e] = analyzeSample(removeElementFromCompound(compound, e))
+  })
+  return analysis
+}
 
 
 // output for part 1
-// console.log(alchemy(input).length)
+// console.log(analyzeSample(input))
+
+// output for part 2
