@@ -1,5 +1,4 @@
 const Assert = require('assert')
-const { compileFunction } = require('vm')
 
 //#region 
 let input = 'UjVvhHOKkRrOooNpxXPnJjJnGgNyYmMtThHusqvVQXUCcuHhxJjcJjCsSHhfFzZQEXxeqNEedVvDpPco' +
