@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "follow-redirects": "^1.11.0",
+        "follow-redirects": "^1.13.2",
         "mocha": "^6.2.3"
     },
     "scripts": {
